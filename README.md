@@ -66,3 +66,7 @@ Observer Pattern زیرا :
 گام دوم : ترسیم  class diagram
 =======
 لینک تصویر مربوطه : https://github.com/fatemehsanvari-rgb/OOD.HW.02/blob/f100714a27257214ff548ff51b375fffaef294a5/classdiagram.drawio.png
+
+گام سوم : اعمال الگو
+=======
+الگوهایی که در گام اول شرح داده شد، بر روی کد ها اعمال گردید و بازآرایی شد.
