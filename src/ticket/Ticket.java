@@ -1,14 +1,17 @@
 package ticket;
 
 import assignment.AssignmentStrategy;
+import response.ResponseStrategy;
 import state.*;
 
 public class Ticket {
 
     private int id;
     private String type;
+
     private TicketState currentState;
     private AssignmentStrategy assignmentStrategy;
+    private ResponseStrategy responseStrategy;
 
     public Ticket(int id, String type) {
         this.id = id;
@@ -16,6 +19,7 @@ public class Ticket {
         this.currentState = new CreatedState();
     }
 
+    
     public void setAssignmentStrategy(AssignmentStrategy strategy) {
         this.assignmentStrategy = strategy;
     }
@@ -26,6 +30,18 @@ public class Ticket {
         }
     }
 
+    
+    public void setResponseStrategy(ResponseStrategy strategy) {
+        this.responseStrategy = strategy;
+    }
+
+    public void respond() {
+        if (responseStrategy != null) {
+            responseStrategy.respond(this);
+        }
+    }
+
+    
     public void handleRequest() {
         currentState.handle(this);
     }
@@ -34,6 +50,7 @@ public class Ticket {
         this.currentState = newState;
     }
 
+    
     public int getId() {
         return id;
     }
