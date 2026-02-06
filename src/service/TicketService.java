@@ -2,6 +2,7 @@ package service;
 
 import assignment.*;
 import factory.*;
+import response.*;
 import ticket.Ticket;
 
 public class TicketService {
@@ -19,11 +20,13 @@ public class TicketService {
 
         Ticket ticket = factory.createTicket(id, type);
 
-        // انتخاب Strategy
+        
         if (type.equalsIgnoreCase("BUG")) {
             ticket.setAssignmentStrategy(new BugAssignmentStrategy());
+            ticket.setResponseStrategy(new BugResponseStrategy());
         } else {
             ticket.setAssignmentStrategy(new GeneralAssignmentStrategy());
+            ticket.setResponseStrategy(new GeneralResponseStrategy());
         }
 
         return ticket;
