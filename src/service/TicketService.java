@@ -18,4 +18,8 @@ public class TicketService {
 
         return factory.createTicket(id, type);
     }
+
+    public void processTicket(Ticket ticket) {
+        ticket.handleRequest(); // State Pattern
+    }
 }
