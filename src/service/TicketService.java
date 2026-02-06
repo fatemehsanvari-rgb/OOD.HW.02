@@ -1,5 +1,6 @@
 package service;
 
+import assignment.*;
 import factory.*;
 import ticket.Ticket;
 
@@ -16,10 +17,19 @@ public class TicketService {
             throw new IllegalArgumentException("Unknown channel");
         }
 
-        return factory.createTicket(id, type);
+        Ticket ticket = factory.createTicket(id, type);
+
+        // انتخاب Strategy
+        if (type.equalsIgnoreCase("BUG")) {
+            ticket.setAssignmentStrategy(new BugAssignmentStrategy());
+        } else {
+            ticket.setAssignmentStrategy(new GeneralAssignmentStrategy());
+        }
+
+        return ticket;
     }
 
     public void processTicket(Ticket ticket) {
-        ticket.handleRequest(); // State Pattern
+        ticket.handleRequest();
     }
 }
