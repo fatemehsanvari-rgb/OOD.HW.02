@@ -1,8 +1,12 @@
 package ticket;
 
 import assignment.AssignmentStrategy;
+import observer.TicketEventListener;
 import response.ResponseStrategy;
 import state.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ticket {
 
@@ -13,13 +17,26 @@ public class Ticket {
     private AssignmentStrategy assignmentStrategy;
     private ResponseStrategy responseStrategy;
 
+    private List<TicketEventListener> listeners = new ArrayList<>();
+
     public Ticket(int id, String type) {
         this.id = id;
         this.type = type;
         this.currentState = new CreatedState();
     }
 
-    
+    // -------- Observer --------
+    public void addListener(TicketEventListener listener) {
+        listeners.add(listener);
+    }
+
+    public void notifyListeners(String message) {
+        for (TicketEventListener listener : listeners) {
+            listener.update(this, message);
+        }
+    }
+
+    // -------- Assignment --------
     public void setAssignmentStrategy(AssignmentStrategy strategy) {
         this.assignmentStrategy = strategy;
     }
@@ -30,7 +47,7 @@ public class Ticket {
         }
     }
 
-    
+    // -------- Response --------
     public void setResponseStrategy(ResponseStrategy strategy) {
         this.responseStrategy = strategy;
     }
@@ -41,16 +58,17 @@ public class Ticket {
         }
     }
 
-    
+    // -------- State --------
     public void handleRequest() {
         currentState.handle(this);
     }
 
     public void changeState(TicketState newState) {
         this.currentState = newState;
+        notifyListeners("State changed to " + newState.getClass().getSimpleName());
     }
 
-    
+    // -------- Getters --------
     public int getId() {
         return id;
     }

@@ -2,6 +2,7 @@ package service;
 
 import assignment.*;
 import factory.*;
+import observer.LoggerListener;
 import response.*;
 import ticket.Ticket;
 
@@ -20,7 +21,10 @@ public class TicketService {
 
         Ticket ticket = factory.createTicket(id, type);
 
-        
+        // Observer
+        ticket.addListener(new LoggerListener());
+
+        // Strategies
         if (type.equalsIgnoreCase("BUG")) {
             ticket.setAssignmentStrategy(new BugAssignmentStrategy());
             ticket.setResponseStrategy(new BugResponseStrategy());
